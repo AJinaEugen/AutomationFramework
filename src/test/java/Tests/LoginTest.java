@@ -1,5 +1,6 @@
 package Tests;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,10 +24,22 @@ public class LoginTest {
         //Facem browserul modul maximize (mare).
         driver.manage().window().maximize();
 
+        //Validam pagina de index
+        String expectedindexpage="Index";
+        String actualindexpage=driver.getTitle();// returneaza valoarea din tag-ul de titlu
+        Assert.assertEquals("Index page nu a aparut",expectedindexpage,actualindexpage);
+
         // declar elementul "Sign in"
 
         WebElement SigninElement= driver.findElement(By.id("btn1"));
         SigninElement.click();
+
+
+        String expectedindexlogin="SignIn";
+        String actualindexlogin= driver.getTitle();
+        Assert.assertEquals("Pagina nu a fost gasita",expectedindexlogin,actualindexlogin);
+
+
         WebElement EmailElement = driver. findElement(By.cssSelector("input[placeholder='E mail']"));
         String emailvalue = "alexandru.alexandruy@gss.com";
         EmailElement.sendKeys(emailvalue);
@@ -37,6 +50,14 @@ public class LoginTest {
 
         WebElement submitElement= driver.findElement(By.id("enterbtn"));
         submitElement.click();
+
+        // Validam mesajul de eroare
+
+        WebElement errormessage=driver.findElement(By.id("errormsg"));
+        String expectederrormessage="Invalid User Name or PassWord";
+        String actualerrormessage  = errormessage.getText();
+
+        Assert.assertEquals("Mesajul de eroare pentru login nu e bun",expectederrormessage,actualerrormessage);
 
 
 
