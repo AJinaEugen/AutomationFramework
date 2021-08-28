@@ -41,7 +41,7 @@ public class LoginTest {
 
 
         WebElement EmailElement = driver. findElement(By.cssSelector("input[placeholder='E mail']"));
-        String emailvalue = "alexandru.alexandruy@gss.com";
+        String emailvalue = System.currentTimeMillis()+"@gss.com";
         EmailElement.sendKeys(emailvalue);
 
         WebElement passwordElement = driver. findElement(By.cssSelector("input[placeholder='Password']"));
@@ -58,6 +58,8 @@ public class LoginTest {
         String actualerrormessage  = errormessage.getText();
 
         Assert.assertEquals("Mesajul de eroare pentru login nu e bun",expectederrormessage,actualerrormessage);
+
+
 
 
 
