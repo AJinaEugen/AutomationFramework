@@ -1,5 +1,7 @@
 package Tests;
 
+import HelpMethods.ElementMethods;
+import HelpMethods.PageMethods;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -15,6 +17,8 @@ import java.util.List;
 public class RegisterTest {
 
     public WebDriver driver;
+    public ElementMethods elementmethods;
+    public PageMethods pagemethods;
 
     @Test
     public void testRegister() {
@@ -24,45 +28,40 @@ public class RegisterTest {
         driver.get("http://demo.automationtesting.in/Index.html");
         driver.manage().window().maximize();
 
+        elementmethods = new ElementMethods(driver);
+        pagemethods = new PageMethods(driver);
 
         //Validam pagina de de pornire
         String expectedindexpage = "Index";
-        String actualindexpage = driver.getTitle();// returneaza valoarea din tag-ul de titlu
-        Assert.assertEquals("Index page nu a aparut", expectedindexpage, actualindexpage);
+        pagemethods.validateTitlepage(expectedindexpage);
 
         WebElement Skipsigninbutton = driver.findElement(By.id("btn2"));
-        Skipsigninbutton.click();
-
+        elementmethods.clickElement(Skipsigninbutton);
 
         // Validam pagina de inregistrare
         String expectedindexpageinregistrare = "Register";
-        String actualindexpageinregistrare = driver.getTitle();// returneaza valoarea din tag-ul de titlu
-        Assert.assertEquals("pagina de inregistrare nu e corecta ", expectedindexpageinregistrare, actualindexpageinregistrare);
-
+        pagemethods.validateTitlepage(expectedindexpageinregistrare);
 
         WebElement Firstnameelement = driver.findElement(By.cssSelector("input[placeholder='First Name']"));
         String firstnamevalue = "Alexandru";
-        Firstnameelement.sendKeys(firstnamevalue);
+        elementmethods.fillElement(Firstnameelement,firstnamevalue);
+
         WebElement Lasnameelement = driver.findElement(By.cssSelector("input[placeholder='Last Name']"));
         String lastnamevalue = "Jina";
-        Lasnameelement.sendKeys(lastnamevalue);
+        elementmethods.fillElement(Lasnameelement,lastnamevalue);
 
         WebElement Malebuttonelement = driver.findElement(By.cssSelector("input[value='Male']"));
         Malebuttonelement.click();
 
         // Interactionez cu un dropdown
         WebElement CountrydropdownElement = driver.findElement(By.id("countries"));
-        Select countryselect = new Select(CountrydropdownElement);
-        countryselect.selectByVisibleText("Albania");
+        elementmethods.selectElementbytxt(CountrydropdownElement,"Albania");
 
         WebElement SkillsdropdownElement = driver.findElement(By.id("Skills"));
-        Select skillsselect = new Select(SkillsdropdownElement);
-        skillsselect.selectByVisibleText("Tech Support");
-
+        elementmethods.selectElementbytxt(SkillsdropdownElement,"Tech Support");
 
         WebElement YearselectElement = driver.findElement(By.id("yearbox"));
-        Select Yearselect = new Select(YearselectElement);
-        Yearselect.selectByValue("1995");
+        elementmethods.selectElementbyvalue(YearselectElement,"1995");
 
 
         WebElement importElement = driver.findElement(By.id("imagesrc"));
@@ -92,7 +91,7 @@ public class RegisterTest {
         selectcountryelement.click();
 
         WebElement searchfieldlement =driver.findElement(By.cssSelector(".select2-search__field"));
-        searchfieldlement.sendKeys(tara,Keys.RETURN);
+        elementmethods.fillElement(searchfieldlement,tara,Keys.RETURN);
 
 
 
