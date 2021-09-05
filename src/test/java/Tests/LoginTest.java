@@ -1,5 +1,6 @@
 package Tests;
 
+import Base.BaseTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -7,22 +8,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LoginTest {
+public class LoginTest extends BaseTest {
 
-    public WebDriver driver;   // o variabila globala - public variabila tip WebDriver
+    // public WebDriver driver;   // o variabila globala - public variabila tip WebDriver
 
 
     @org.junit.Test
     public void Test(){
 
 
-        System.setProperty("webdriver.chrome.driver", "C:\\Automation\\Chrome driver\\chromedriver.exe");// "cheia", locul unde e driverul pe calculator
-
-        // deschizi un browser + accesam un URL
-        driver = new ChromeDriver();
-        driver.get("http://demo.automationtesting.in/Index.html");
-        //Facem browserul modul maximize (mare).
-        driver.manage().window().maximize();
+//        //  System.setProperty("webdriver.chrome.driver", "C:\\Automation\\Chrome driver\\chromedriver.exe");// "cheia", locul unde e driverul pe calculator
+//
+//        // deschizi un browser + accesam un URL
+//        driver = new ChromeDriver();
+//        driver.get("http://demo.automationtesting.in/Index.html");
+//        //Facem browserul modul maximize (mare).
+//        driver.manage().window().maximize();
 
         //Validam pagina de index
         String expectedindexpage="Index";

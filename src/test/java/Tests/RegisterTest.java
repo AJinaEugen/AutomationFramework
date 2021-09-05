@@ -1,5 +1,6 @@
 package Tests;
 
+import Base.BaseTest;
 import HelpMethods.ElementMethods;
 import HelpMethods.PageMethods;
 import org.junit.Assert;
@@ -14,22 +15,21 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisterTest {
+public class RegisterTest extends BaseTest {
 
-    public WebDriver driver;
+
+
     public ElementMethods elementmethods;
     public PageMethods pagemethods;
 
     @Test
     public void testRegister() {
 
-        System.setProperty("webdriver.chrome.driver", "C:\\Automation\\Chrome driver\\chromedriver.exe");// "cheia", locul unde e driverul pe calculator
-        driver = new ChromeDriver();
-        driver.get("http://demo.automationtesting.in/Index.html");
-        driver.manage().window().maximize();
+
 
         elementmethods = new ElementMethods(driver);
         pagemethods = new PageMethods(driver);
+
 
         //Validam pagina de de pornire
         String expectedindexpage = "Index";

@@ -1,6 +1,7 @@
 package Tests;
 
 import Base.BaseTest;
+import HelpMethods.ElementMethods;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,12 +16,16 @@ public class AlerteTests extends BaseTest {
 
 
 
-
+    ElementMethods elementmethods;
 
 
     @Test
     public void testalerte(){
 
+        elementmethods = new ElementMethods(driver);
+
+        WebElement Skipsigninbutton = driver.findElement(By.id("btn2"));
+        elementmethods.clickElement(Skipsigninbutton);
 
         WebElement SwitcToelement = driver.findElement(By.xpath("//a[contains(text(),'Switch')]"));
         // obiect de tipul actions  !!!!
