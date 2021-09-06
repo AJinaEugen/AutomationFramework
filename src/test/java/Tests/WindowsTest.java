@@ -1,6 +1,8 @@
 package Tests;
 
 import Base.BaseTest;
+import HelpMethods.ElementMethods;
+import HelpMethods.PageMethods;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,10 +13,25 @@ import java.util.List;
 
 public class WindowsTest extends BaseTest {
 
-
+     ElementMethods elementmethods;
+     PageMethods pagemethods;
 
     @Test
             public void testwindows() {
+
+          elementmethods = new ElementMethods(driver);
+          pagemethods = new PageMethods(driver);
+
+        //Validam pagina de de pornire
+        String expectedindexpage = "Index";
+        pagemethods.validateTitlepage(expectedindexpage);
+
+        WebElement Skipsigninbutton = driver.findElement(By.id("btn2"));
+        elementmethods.clickElement(Skipsigninbutton);
+
+        // Validam pagina de inregistrare
+        String expectedindexpageinregistrare = "Register";
+        pagemethods.validateTitlepage(expectedindexpageinregistrare);
 
 
         WebElement SwitcToelement = driver.findElement(By.xpath("//a[contains(text(),'Switch')]"));
@@ -45,6 +62,7 @@ public class WindowsTest extends BaseTest {
         WebElement okbuttonelement = driver.findElement(By.cssSelector("button[onclick='multiwindow()']"));
         okbuttonelement.click();
         ArrayList<String> multipletabs = new ArrayList<>(driver.getWindowHandles());
+       System.out.print(multipletabs.size());
         driver.switchTo().window(multipletabs.get(2));
         System.out.println("Title 1/2 tabs"+ " "+ driver.getTitle());
         driver.close();

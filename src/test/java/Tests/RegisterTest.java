@@ -86,7 +86,7 @@ public class RegisterTest extends BaseTest {
         }
         Lasnameelement.click();
 
-       String tara ="Australia";
+        String tara ="Australia";
         WebElement selectcountryelement = driver.findElement(By.cssSelector(".select2-selection"));
         selectcountryelement.click();
 
