@@ -2,6 +2,7 @@ package Tests;
 
 import Base.BaseTest;
 import HelpMethods.ElementMethods;
+import HelpMethods.FrameMethods;
 import HelpMethods.PageMethods;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -14,12 +15,14 @@ public class FramesTest extends BaseTest {
 
     ElementMethods elementmethods;
     PageMethods pagemethods;
+    FrameMethods frameMethods;
 
     @Test
     public void framesTest(){
 
         elementmethods = new ElementMethods(driver);
         pagemethods = new PageMethods(driver);
+        frameMethods = new FrameMethods(driver);
 
         //Validam pagina de de pornire
         String expectedindexpage = "Index";
@@ -37,37 +40,39 @@ public class FramesTest extends BaseTest {
 
         WebElement SwitcToelement = driver.findElement(By.xpath("//a[contains(text(),'Switch')]"));
         // obiect de tipul actions  !!!!
-        Actions hover = new Actions(driver);
-        hover.moveToElement(SwitcToelement).build().perform();  // garanteaza ca merge cu mouse-ul la element
+
+        elementmethods.hoverElement(SwitcToelement);  // garanteaza ca merge cu mouse-ul la element
 
         WebElement AlerElement = driver.findElement(By.cssSelector("a[href='Frames.html']"));
         AlerElement.click();
-        driver.navigate().to("http://demo.automationtesting.in/Frames.html");
+
+        pagemethods.navigateToPage("http://demo.automationtesting.in/Frames.html");
 
         List<WebElement> frameelement = driver.findElements(By.cssSelector(".nav.nav-tabs li"));
 
         frameelement.get(0).click();
 
 
-        driver.switchTo().frame("singleframe");
+        frameMethods.switchToFrame("singleframe");
+
         WebElement textboxelement = driver.findElement(By.cssSelector("input[type='text']"));
         textboxelement.sendKeys("AlexandruJ");
 
-        driver.switchTo().defaultContent(); // te intoarce cu focus-ul la pagina principala;
+        frameMethods.switchtomainFrame(); // te intoarce cu focus-ul la pagina principala;
 
 
         frameelement.get(1).click();
 
         WebElement BigIframe = driver.findElement(By.cssSelector("iframe[src='MultipleFrames.html']"));
-        driver.switchTo().frame(BigIframe);
+        frameMethods.switchToFrame(BigIframe);
 
         WebElement Littleframe =driver.findElement(By.cssSelector("iframe[src='SingleFrame.html']"));
-        driver.switchTo().frame(Littleframe);
+        frameMethods.switchToFrame(Littleframe);
 
         WebElement textboxinframe = driver.findElement(By.cssSelector("input[type='text']"));
         textboxinframe.sendKeys("AlexandruJ");
 
-        driver.switchTo().defaultContent();
+        frameMethods.switchtomainFrame();
 
         frameelement.get(0).click();
 

@@ -1,6 +1,9 @@
 package Tests;
 
 import Base.BaseTest;
+import HelpMethods.ElementMethods;
+import HelpMethods.PageMethods;
+import Property.PropertyFile;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -11,11 +14,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class LoginTest extends BaseTest {
 
     // public WebDriver driver;   // o variabila globala - public variabila tip WebDriver
-
+    public ElementMethods elementMethods;
+    public PageMethods pageMethods;
+    public PropertyFile propertyFile;
 
     @org.junit.Test
     public void Test(){
 
+        elementMethods = new ElementMethods(driver);
+        pageMethods = new PageMethods(driver);
+        propertyFile = new PropertyFile("InputData");
 
 //        //  System.setProperty("webdriver.chrome.driver", "C:\\Automation\\Chrome driver\\chromedriver.exe");// "cheia", locul unde e driverul pe calculator
 //
@@ -26,7 +34,7 @@ public class LoginTest extends BaseTest {
 //        driver.manage().window().maximize();
 
         //Validam pagina de index
-        String expectedindexpage="Index";
+        String expectedindexpage=propertyFile.getValueByKey("indexpage");
         String actualindexpage=driver.getTitle();// returneaza valoarea din tag-ul de titlu
         Assert.assertEquals("Index page nu a aparut",expectedindexpage,actualindexpage);
 
@@ -37,8 +45,7 @@ public class LoginTest extends BaseTest {
 
 
         String expectedindexlogin="SignIn";
-        String actualindexlogin= driver.getTitle();
-        Assert.assertEquals("Pagina nu a fost gasita",expectedindexlogin,actualindexlogin);
+        pageMethods.validateTitlepage(expectedindexlogin);
 
 
         WebElement EmailElement = driver. findElement(By.cssSelector("input[placeholder='E mail']"));
@@ -56,14 +63,9 @@ public class LoginTest extends BaseTest {
 
         WebElement errormessage=driver.findElement(By.id("errormsg"));
         String expectederrormessage="Invalid User Name or PassWord";
-        String actualerrormessage  = errormessage.getText();
-
-        Assert.assertEquals("Mesajul de eroare pentru login nu e bun",expectederrormessage,actualerrormessage);
 
 
-
-
-
+        elementMethods.validateElementMessage(expectederrormessage,errormessage);
 
 
     }

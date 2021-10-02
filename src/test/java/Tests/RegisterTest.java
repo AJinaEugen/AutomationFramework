@@ -3,6 +3,7 @@ package Tests;
 import Base.BaseTest;
 import HelpMethods.ElementMethods;
 import HelpMethods.PageMethods;
+import Property.PropertyFile;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -21,6 +22,7 @@ public class RegisterTest extends BaseTest {
 
     public ElementMethods elementmethods;
     public PageMethods pagemethods;
+    public PropertyFile propertyFile;
 
     @Test
     public void testRegister() {
@@ -29,21 +31,23 @@ public class RegisterTest extends BaseTest {
 
         elementmethods = new ElementMethods(driver);
         pagemethods = new PageMethods(driver);
+        propertyFile = new PropertyFile("InputData");
+
 
 
         //Validam pagina de de pornire
-        String expectedindexpage = "Index";
+        String expectedindexpage = propertyFile.getValueByKey("indexpage");
         pagemethods.validateTitlepage(expectedindexpage);
 
         WebElement Skipsigninbutton = driver.findElement(By.id("btn2"));
         elementmethods.clickElement(Skipsigninbutton);
 
         // Validam pagina de inregistrare
-        String expectedindexpageinregistrare = "Register";
+        String expectedindexpageinregistrare = propertyFile.getValueByKey("registerpage");
         pagemethods.validateTitlepage(expectedindexpageinregistrare);
 
         WebElement Firstnameelement = driver.findElement(By.cssSelector("input[placeholder='First Name']"));
-        String firstnamevalue = "Alexandru";
+        String firstnamevalue =propertyFile.getValueByKey("firstname");
         elementmethods.fillElement(Firstnameelement,firstnamevalue);
 
         WebElement Lasnameelement = driver.findElement(By.cssSelector("input[placeholder='Last Name']"));
