@@ -3,6 +3,8 @@ package Tests;
 import Base.BaseTest;
 import HelpMethods.ElementMethods;
 import HelpMethods.PageMethods;
+import Pages.IndexPage;
+import Pages.SigninPage;
 import Property.PropertyFile;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,6 +19,8 @@ public class LoginTest extends BaseTest {
     public ElementMethods elementMethods;
     public PageMethods pageMethods;
     public PropertyFile propertyFile;
+    public IndexPage indexPage;
+    public SigninPage signinPage;
 
     @org.junit.Test
     public void Test(){
@@ -24,6 +28,8 @@ public class LoginTest extends BaseTest {
         elementMethods = new ElementMethods(driver);
         pageMethods = new PageMethods(driver);
         propertyFile = new PropertyFile("InputData");
+        indexPage = new IndexPage(driver);
+        signinPage = new SigninPage(driver);
 
 //        //  System.setProperty("webdriver.chrome.driver", "C:\\Automation\\Chrome driver\\chromedriver.exe");// "cheia", locul unde e driverul pe calculator
 //
@@ -35,38 +41,19 @@ public class LoginTest extends BaseTest {
 
         //Validam pagina de index
         String expectedindexpage=propertyFile.getValueByKey("indexpage");
-        String actualindexpage=driver.getTitle();// returneaza valoarea din tag-ul de titlu
-        Assert.assertEquals("Index page nu a aparut",expectedindexpage,actualindexpage);
-
-        // declar elementul "Sign in"
-
-        WebElement SigninElement= driver.findElement(By.id("btn1"));
-        SigninElement.click();
-
+        indexPage.validatePage(expectedindexpage);
+        indexPage.clickSignin();
 
         String expectedindexlogin="SignIn";
         pageMethods.validateTitlepage(expectedindexlogin);
 
-
-        WebElement EmailElement = driver. findElement(By.cssSelector("input[placeholder='E mail']"));
         String emailvalue = System.currentTimeMillis()+"@gss.com";
-        EmailElement.sendKeys(emailvalue);
-
-        WebElement passwordElement = driver. findElement(By.cssSelector("input[placeholder='Password']"));
         String passwordvalue= "parolameasecreta ";
-        passwordElement.sendKeys(passwordvalue);
-
-        WebElement submitElement= driver.findElement(By.id("enterbtn"));
-        submitElement.click();
+        signinPage.loginProcess(emailvalue,passwordvalue);
 
         // Validam mesajul de eroare
-
-        WebElement errormessage=driver.findElement(By.id("errormsg"));
         String expectederrormessage="Invalid User Name or PassWord";
-
-
-        elementMethods.validateElementMessage(expectederrormessage,errormessage);
-
+        signinPage.validateErrorMessage(expectederrormessage);
 
     }
 
